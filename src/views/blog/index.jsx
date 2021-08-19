@@ -4,6 +4,7 @@ import { withRouter } from "react-router";
 import BlogAuthor from "../../components/blog/blog-author";
 import posts from "../../data/posts.json";
 import "./styles.css";
+
 class Blog extends Component {
   state = {
     blog: {},
@@ -11,8 +12,9 @@ class Blog extends Component {
   };
   componentDidMount() {
     const { id } = this.props.match.params;
-    console.log(posts);
-    const blog = posts.find((post) => post._id.toString() === id);
+    const blog = this.props.posts.find((post) => post.id.toString() === id);
+    console.log(this.props.posts);
+    console.log(blog);
     if (blog) {
       this.setState({ blog, loading: false });
     } else {
@@ -20,7 +22,7 @@ class Blog extends Component {
     }
   }
 
-  render() {
+   render() {
     const { loading, blog } = this.state;
     if (loading) {
       return <div>loading</div>;

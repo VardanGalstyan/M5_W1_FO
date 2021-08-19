@@ -1,19 +1,29 @@
-import React, { Component } from "react";
+import React from "react";
 import { Row, Col, Image } from "react-bootstrap";
 import "./styles.css";
-export default class BlogAuthor extends Component {
-  render() {
-    const { name, avatar } = this.props;
-    return (
-      <Row>
-        <Col xs={2}>
-          <Image className="blog-author" src={avatar} roundedCircle />
-        </Col>
-        <Col>
-          <div>by</div>
-          <h6>{name}</h6>
-        </Col>
-      </Row>
-    );
-  }
+
+
+export default function BlogAuthor(props) {
+  
+const authors = props.authors
+const postAuthorId = props.authorId
+
+const selectedAuthor = authors && authors.find(author => author.id === postAuthorId)
+
+  return (
+    <Row>
+      <Col xs={2}>
+        {
+          selectedAuthor && <Image className="blog-author" src={selectedAuthor.avatar} roundedCircle />
+        }
+      </Col>
+      <Col>
+        <div>by</div>
+        {
+          selectedAuthor && <h6>{selectedAuthor.name}</h6>
+        }
+      </Col>
+    </Row>
+  );
+
 }
