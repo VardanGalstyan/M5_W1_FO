@@ -12,22 +12,34 @@ export default function BlogItem(props) {
 
   useEffect(() => {
     fetchData()
+    console.log(props);
   }, [])
 
   const fetchData = async () => {
-    const response = await fetch('http://localhost:3005/authors')
-    const authors = await response.json()
-    setAuthors(authors)
+    try {
+      const response = await fetch('http://localhost:3001/authors')
+      if (response.ok) {
+        const authors = await response.json()
+        console.log('authors', authors);
+        setAuthors(authors)
+
+      } else {
+        console.log('response is not ok');
+      }
+    } catch (error) {
+      console.log(error);
+    }
+
   }
-  const { title, cover, author, id } = props;
+  const { title, cover, author, _id } = props;
 
 
   return (
     <>
-      { id && 
-        <Link to={`/blog/${id}`} className="blog-link">
+      {_id &&
+        <Link to={`/blog/${_id}`} className="blog-link">
           <Card className="blog-card">
-               <Card.Img variant="top" src={cover} className="blog-cover" />
+            <Card.Img variant="top" src={cover} className="blog-cover" />
             <Card.Body>
               <Card.Title>{title}</Card.Title>
             </Card.Body>
